@@ -3,10 +3,22 @@ import Form from "./components/Form";
 import Space from "./components/Space";
 
 function App() {
+  //spaces in local storage
+  let spacesInitial = JSON.parse(localStorage.getItem("spaces"));
+  if (!spacesInitial) {
+    spacesInitial = [];
+  }
   // state for spaces
-  const [spaces, setSpaces] = useState([]);
+  const [spaces, setSpaces] = useState(spacesInitial);
 
   //Use Effect whet state changes
+  useEffect(() => {
+    if (spaces) {
+      localStorage.setItem("spaces", JSON.stringify(spaces));
+    } else {
+      localStorage.setItem("spaces", JSON.stringify([]));
+    }
+  }, [spaces]);
 
   // function to take current space and add a new space
   const createSpace = (newSpace) => {
