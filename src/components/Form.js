@@ -1,7 +1,8 @@
 import React, { Fragment, useState } from "react";
+import uuid from "uuid/v4";
 
-const Form = () => {
-  // State of spaces
+const Form = ({ createSpace }) => {
+  // State of space for the form
   const [space, setSpace] = useState({
     pet: "",
     owner: "",
@@ -9,6 +10,8 @@ const Form = () => {
     hour: "",
     syntoms: "",
   });
+
+  const [error, setError] = useState(false);
 
   // Function for update the form
   const handleChange = (e) => {
@@ -22,10 +25,46 @@ const Form = () => {
 
   const { pet, owner, date, hour, syntoms } = space;
 
+  //When user click button in the form
+  const submitSpace = (e) => {
+    e.preventDefault();
+
+    //Validation
+    if (
+      pet.trim() === "" ||
+      owner.trim() === "" ||
+      date.trim() === "" ||
+      hour.trim() === "" ||
+      syntoms.trim() === ""
+    ) {
+      setError(true);
+      return;
+    }
+    //if no error set error to false
+    setError(false);
+
+    //Add ID
+    space.id = uuid();
+
+    //Add space
+    createSpace(space);
+
+    //Reinitialize form
+    setSpace({
+      pet: "",
+      owner: "",
+      date: "",
+      hour: "",
+      syntoms: "",
+    });
+  };
+
   return (
     <Fragment>
       <h2>Reserve an space</h2>
-      <form>
+
+      {error ? <p className="alerta-error">All fields must be filled</p> : null}
+      <form onSubmit={submitSpace}>
         <label>Pet Name</label>
         <input
           type="text"
@@ -61,7 +100,7 @@ const Form = () => {
           name="hour"
           className="u-full-width"
           onChange={handleChange}
-          hour={hour}
+          value={hour}
         />
 
         <label>Syntoms</label>
