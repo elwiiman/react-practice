@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Space = ({ space, deleteSpace }) => (
   <div className="cita">
@@ -26,5 +27,10 @@ const Space = ({ space, deleteSpace }) => (
     </button>
   </div>
 );
+
+Space.propTypes = {
+  space: PropTypes.object.isRequired,
+  deleteSpace: PropTypes.func.isRequired,
+};
 
 export default Space;

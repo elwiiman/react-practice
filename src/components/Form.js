@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import uuid from "uuid/v4";
+import PropTypes from "prop-types";
 
 const Form = ({ createSpace }) => {
   // State of space for the form
@@ -117,6 +118,10 @@ const Form = ({ createSpace }) => {
       </form>
     </Fragment>
   );
+};
+
+Form.propTypes = {
+  createSpace: PropTypes.func.isRequired,
 };
 
 export default Form;
